@@ -1,7 +1,29 @@
+import React, { useState } from 'react';
+
 function App() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [interests, setInterests] = useState({
+    swimming: false,
+    reading: false,
+    
+  });
+
+  const handleCheckboxChange = (event) => {
+    setInterests({
+      ...interests,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`Name: ${name}\nEmail: ${email}\nInterests: ${Object.keys(interests).filter(interest => interests[interest]).join(', ')}`);
+  };
+
   return (
     <main>
-      <h1>Hi, I'm (your name)</h1>
+      <h1>Hi, I'm Elsie Wangui</h1>
       <img alt="My profile pic" src="https://via.placeholder.com/350" />
       <h2>About Me</h2>
       <p>
@@ -18,6 +40,51 @@ function App() {
         <a href="https://github.com">GitHub</a>
         <a href="https://linkedin.com">LinkedIn</a>
       </div>
+
+      <form onSubmit={handleSubmit}>
+      <div>
+          <label htmlFor="name">Name:</label>
+          <input 
+            type="text" 
+            id="name" 
+            value={name}
+            onChange={(e) => setName(e.target.value)} 
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input 
+            type="email" 
+            id="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} 
+          />
+          </div>
+        
+        <div>
+          <label>
+            <input 
+              type="checkbox" 
+              name="swimming" 
+              checked={interests.swimming} 
+              onChange={handleCheckboxChange} 
+            />
+            Swimming
+          </label>
+          <label>
+            <input 
+              type="checkbox" 
+              name="reading" 
+              checked={interests.reading} 
+              onChange={handleCheckboxChange} 
+            />
+            Reading
+          </label>
+          
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      { <p>Thank you for subscribing!</p>}
     </main>
   );
 }
